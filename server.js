@@ -12,8 +12,8 @@ const { Storage } = require('@google-cloud/storage');
 
 // Import Database Models
 const Product = require('./models/product');
-const Setting = require('./models/Setting');
-const Order = require('./models/Order');
+const Setting = require('./models/setting');
+const Order = require('./models/order');
 const Reservation = require('./models/reservation');
 
 const app = express();
@@ -256,3 +256,4 @@ app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.ht
 
 
 app.listen(PORT, () => console.log(`🚀 Server fully operational on port ${PORT}`));
+
