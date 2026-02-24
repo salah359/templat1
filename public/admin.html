@@ -10,36 +10,12 @@
     <style>
         :root { --sidebar-width: 260px; --primary-bg: #1e1e2d; }
         body { background-color: #f4f6f9; min-height: 100vh; display: flex; font-family: 'Segoe UI', sans-serif; }
-        
-        /* Sidebar Styling */
-        #sidebar {
-            width: var(--sidebar-width);
-            background: var(--primary-bg);
-            color: #fff;
-            position: fixed;
-            height: 100vh;
-            z-index: 1000;
-            transition: 0.3s;
-        }
-        #sidebar .nav-link { color: #a6a6c0; padding: 15px 20px; cursor: pointer; border-left: 4px solid transparent; }
-        #sidebar .nav-link:hover, #sidebar .nav-link.active { background: #2b2b40; color: #fff; border-left-color: #0d6efd; }
-        #sidebar .nav-link i { margin-right: 10px; font-size: 1.2rem; }
-        
-        /* Content Styling */
-        #content {
-            margin-left: var(--sidebar-width);
-            width: calc(100% - var(--sidebar-width));
-            padding: 30px;
-            transition: 0.3s;
-        }
+        #sidebar { width: var(--sidebar-width); background: var(--primary-bg); color: #fff; position: fixed; height: 100vh; z-index: 1000; }
+        #sidebar .nav-link { color: #a6a6c0; padding: 15px 20px; cursor: pointer; }
+        #sidebar .nav-link:hover, #sidebar .nav-link.active { background: #2b2b40; color: #fff; border-left: 4px solid #0d6efd; }
+        #content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 30px; }
         .card-stat { border: none; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            #sidebar { margin-left: -260px; }
-            #sidebar.active { margin-left: 0; }
-            #content { margin-left: 0; width: 100%; }
-        }
+        @media (max-width: 768px) { #sidebar { margin-left: -260px; } #sidebar.active { margin-left: 0; } #content { margin-left: 0; width: 100%; } }
     </style>
 </head>
 <body>
@@ -60,86 +36,29 @@
     </nav>
 
     <div id="content">
-        <button class="btn btn-dark d-md-none mb-3" onclick="document.getElementById('sidebar').classList.toggle('active')">
-            <i class="bi bi-list"></i> Menu
-        </button>
+        <button class="btn btn-dark d-md-none mb-3" onclick="document.getElementById('sidebar').classList.toggle('active')"><i class="bi bi-list"></i> Menu</button>
 
         <div id="dashboard" class="section">
-            <h2 class="mb-4 fw-bold">Business Overview</h2>
+            <h2 class="mb-4 fw-bold">Overview</h2>
             <div class="row g-4 mb-5">
-                <div class="col-md-3">
-                    <div class="card card-stat p-3 bg-white h-100">
-                        <div class="d-flex align-items-center">
-                            <div class="fs-1 text-primary me-3"><i class="bi bi-cash-coin"></i></div>
-                            <div>
-                                <h6 class="text-muted mb-0">Total Revenue</h6>
-                                <h3 class="fw-bold mb-0" id="statRevenue">₪0</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stat p-3 bg-white h-100">
-                        <div class="d-flex align-items-center">
-                            <div class="fs-1 text-success me-3"><i class="bi bi-bag-check"></i></div>
-                            <div>
-                                <h6 class="text-muted mb-0">Total Orders</h6>
-                                <h3 class="fw-bold mb-0" id="statOrders">0</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stat p-3 bg-white h-100">
-                        <div class="d-flex align-items-center">
-                            <div class="fs-1 text-warning me-3"><i class="bi bi-people"></i></div>
-                            <div>
-                                <h6 class="text-muted mb-0">Reservations</h6>
-                                <h3 class="fw-bold mb-0" id="statReservations">0</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stat p-3 bg-white h-100">
-                        <div class="d-flex align-items-center">
-                            <div class="fs-1 text-info me-3"><i class="bi bi-box-seam"></i></div>
-                            <div>
-                                <h6 class="text-muted mb-0">Menu Items</h6>
-                                <h3 class="fw-bold mb-0" id="statProducts">0</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="col-md-3"><div class="card card-stat p-3 bg-white"><h6>Revenue</h6><h3 id="statRevenue">₪0</h3></div></div>
+                <div class="col-md-3"><div class="card card-stat p-3 bg-white"><h6>Orders</h6><h3 id="statOrders">0</h3></div></div>
+                <div class="col-md-3"><div class="card card-stat p-3 bg-white"><h6>Bookings</h6><h3 id="statReservations">0</h3></div></div>
+                <div class="col-md-3"><div class="card card-stat p-3 bg-white"><h6>Products</h6><h3 id="statProducts">0</h3></div></div>
             </div>
-            
-            <div class="card card-stat p-4 bg-white">
-                <h5 class="mb-4">Performance Analytics</h5>
-                <canvas id="analyticsChart" style="max-height: 350px;"></canvas>
-            </div>
+            <div class="card card-stat p-4 bg-white"><h5 class="mb-4">Analytics</h5><canvas id="analyticsChart" style="max-height: 350px;"></canvas></div>
         </div>
 
         <div id="products" class="section d-none">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="fw-bold">Menu Management</h2>
-                <button class="btn btn-primary btn-lg" onclick="openProductModal()"><i class="bi bi-plus-circle"></i> Add New Item</button>
+                <button class="btn btn-primary" onclick="openProductModal()">+ Add New Item</button>
             </div>
             <div class="card card-stat p-3 bg-white">
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="productTableBody">
-                            </tbody>
-                    </table>
-                </div>
+                <table class="table table-hover align-middle">
+                    <thead class="table-light"><tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead>
+                    <tbody id="productTableBody"></tbody>
+                </table>
             </div>
         </div>
 
@@ -150,15 +69,14 @@
                     <table class="table align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th>Order ID</th>
-                                <th>Customer</th>
-                                <th>Details</th>
+                                <th>ID</th>
+                                <th>Customer / Phone</th>
+                                <th>Address</th> <th>Items</th>
                                 <th>Total</th>
                                 <th>Status</th>
-                            </tr>
+                                <th>Action</th> </tr>
                         </thead>
-                        <tbody id="orderTableBody">
-                            </tbody>
+                        <tbody id="orderTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -167,48 +85,31 @@
         <div id="reservations" class="section d-none">
             <h2 class="mb-4 fw-bold">Table Reservations</h2>
             <div class="card card-stat p-3 bg-white">
-                <div class="table-responsive">
-                    <table class="table align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Guest Name</th>
-                                <th>Party Size</th>
-                                <th>Date & Time</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="reservationTableBody">
-                            </tbody>
-                    </table>
-                </div>
+                <table class="table align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Guest Name</th>
+                            <th>Party Size</th>
+                            <th>Date & Time</th>
+                            <th>Status</th>
+                            <th>Action</th> </tr>
+                    </thead>
+                    <tbody id="reservationTableBody"></tbody>
+                </table>
             </div>
         </div>
 
         <div id="settings" class="section d-none">
-            <h2 class="mb-4 fw-bold">Store Configuration</h2>
+            <h2 class="mb-4 fw-bold">Settings</h2>
             <div class="card card-stat p-4 bg-white">
                 <form id="settingsForm">
                     <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Store Name</label>
-                            <input type="text" id="setStoreName" class="form-control" placeholder="E.g. Velvet Lounge">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Currency Symbol</label>
-                            <input type="text" id="setCurrency" class="form-control" placeholder="E.g. ₪">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">WhatsApp Number (International Format)</label>
-                            <input type="text" id="setWhatsapp" class="form-control" placeholder="E.g. 972501234567">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Theme Color</label>
-                            <input type="color" id="setColor" class="form-control form-control-color" style="width: 100%;">
-                        </div>
+                        <div class="col-md-6"><label>Store Name</label><input type="text" id="setStoreName" class="form-control"></div>
+                        <div class="col-md-6"><label>Currency</label><input type="text" id="setCurrency" class="form-control"></div>
+                        <div class="col-md-6"><label>WhatsApp Number</label><input type="text" id="setWhatsapp" class="form-control"></div>
+                        <div class="col-md-6"><label>Theme Color</label><input type="color" id="setColor" class="form-control form-control-color" style="width: 100%;"></div>
                     </div>
-                    <div class="mt-4">
-                        <button type="submit" class="btn btn-success btn-lg px-5">Save Changes</button>
-                    </div>
+                    <button type="submit" class="btn btn-success mt-4">Save Changes</button>
                 </form>
             </div>
         </div>
@@ -217,45 +118,22 @@
     <div class="modal fade" id="productModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold">Add New Menu Item</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <div class="modal-header"><h5 class="modal-title">Add Menu Item</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
                 <div class="modal-body">
                     <form id="productForm">
-                        <div class="mb-3">
-                            <label class="form-label">Item Name</label>
-                            <input type="text" name="name" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Category</label>
-                            <select name="category" class="form-select" required>
-                                <option value="Starters">Starters</option>
-                                <option value="Mains">Mains</option>
-                                <option value="Drinks">Drinks</option>
-                                <option value="Desserts">Desserts</option>
-                                <option value="Hookah">Hookah</option>
-                                <option value="Sides">Sides</option>
-                                <option value="Kids">Kids</option>
+                        <div class="mb-3"><label>Name</label><input type="text" name="name" class="form-control" required></div>
+                        <div class="mb-3"><label>Category</label>
+                            <select name="category" class="form-select">
+                                <option value="Starters">Starters</option><option value="Mains">Mains</option>
+                                <option value="Drinks">Drinks</option><option value="Desserts">Desserts</option>
+                                <option value="Hookah">Hookah</option><option value="Sides">Sides</option><option value="Kids">Kids</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Price</label>
-                            <input type="number" name="price" class="form-control" step="0.01" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea name="description" class="form-control" rows="2"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Product Image</label>
-                            <input type="file" name="images" class="form-control">
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" name="isPopular" value="true" id="checkPopular">
-                            <label class="form-check-label" for="checkPopular">Feature on Home Page?</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 py-2">Save Product</button>
+                        <div class="mb-3"><label>Price</label><input type="number" name="price" class="form-control" step="0.01" required></div>
+                        <div class="mb-3"><label>Description</label><textarea name="description" class="form-control"></textarea></div>
+                        <div class="mb-3"><label>Image</label><input type="file" name="images" class="form-control"></div>
+                        <div class="mb-3 form-check"><input type="checkbox" class="form-check-input" name="isPopular" value="true" id="checkPopular"><label class="form-check-label" for="checkPopular">Feature on Home?</label></div>
+                        <button type="submit" class="btn btn-primary w-100">Save Product</button>
                     </form>
                 </div>
             </div>
