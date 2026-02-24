@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velvet | Dining & Lounge</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <style>
+        /* Base Variables - Will be updated by JS from Settings */
+        :root { 
+            --primary-color: #D4AF37; 
+            --bg-dark: #121212;
+            --bg-panel: #1e1e1e;
+            --text-light: #f0f0f0;
+        }
+        
+        body { font-family: 'Lato', sans-serif; background-color: var(--bg-dark); color: var(--text-light); }
+        h1, h2, h3, .brand-font { font-family: 'Playfair Display', serif; }
+        
+        /* Navbar Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #000;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            border-right: 1px solid #333;
+            z-index: 1000;
+        }
+        .logo { font-size: 32px; color: var(--primary-color); letter-spacing: 2px; margin-bottom: 60px; font-weight: bold; }
+        .nav-links { list-style: none; padding: 0; }
+        .nav-links li { margin-bottom: 25px; }
+        .nav-links a { text-decoration: none; color: #aaa; font-size: 18px; transition: 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-color); }
+        
+        /* Main Content */
+        main { margin-left: 250px; width: calc(100% - 250px); }
+        
+        /* Hero */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1514362545857-3bc16549766b?auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding-left: 10%;
+        }
+        .hero h1 { font-size: 4rem; margin-bottom: 20px; line-height: 1.1; }
+        .text-gold { color: var(--primary-color) !important; }
+        
+        /* Buttons */
+        .btn-gold {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 12px 35px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .btn-gold:hover { background: var(--primary-color); color: #000; }
+        
+        /* Menu Section */
+        .section { padding: 80px 5%; min-height: 100vh; }
+        .menu-filters { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 40px; }
+        .filter-btn {
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.1rem;
+            white-space: nowrap;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+        }
+        .filter-btn.active { color: var(--primary-color); border-color: var(--primary-color); }
+        
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        .menu-item {
+            background: var(--bg-panel);
+            padding: 20px;
+            border: 1px solid #333;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .menu-item:hover { border-color: var(--primary-color); transform: translateY(-5px); }
+        .menu-img { width: 100%; height: 200px; object-fit: cover; margin-bottom: 15px; }
+        
+        /* Reservation Form */
+        .dark-bg { background: #0d0d0d; }
+        .form-control {
+            background: transparent;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 15px;
+        }
+        .form-control:focus { background: transparent; border-color: var(--primary-color); color: #fff; box-shadow: none; }
+        
+        /* Cart Sidebar & FAB */
+        .fab-cart {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-color);
+            color: #000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 2000;
+        }
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 50%;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; padding: 20px; flex-direction: row; justify-content: space-between; align-items: center; }
+            .logo { margin-bottom: 0; font-size: 24px; }
+            .nav-links { display: none; } /* Simplified for mobile */
+            main { margin-left: 0; width: 100%; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="logo logo-text">VELVET</div>
+        <ul class="nav-links d-none d-md-block">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#menu">Our Menu</a></li>
+            <li><a href="#reserve">Reservations</a></li>
+        </ul>
+        <div class="socials d-none d-md-block text-muted">EST. 2024</div>
+    </nav>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Taste the <br><span class="text-gold">Extraordinary</span></h1>
+                <p class="lead mb-4">Fine Dining & Authentic Flavors</p>
+                <a href="#menu" class="btn btn-gold">View Menu</a>
+            </div>
+        </section>
+
+        <section id="menu" class="section">
+            <div class="d-flex justify-content-between align-items-end mb-5">
+                <h2 class="brand-font display-5 mb-0">Our Collection</h2>
+            </div>
+            
+            <div class="menu-filters">
+                <button class="filter-btn active" onclick="filterMenu('all')">All</button>
+                <button class="filter-btn" onclick="filterMenu('Starters')">Starters</button>
+                <button class="filter-btn" onclick="filterMenu('Mains')">Mains</button>
+                <button class="filter-btn" onclick="filterMenu('Drinks')">Drinks</button>
+                <button class="filter-btn" onclick="filterMenu('Desserts')">Desserts</button>
+                <button class="filter-btn" onclick="filterMenu('Hookah')">Hookah</button>
+                <button class="filter-btn" onclick="filterMenu('Kids')">Kids</button>
+                <button class="filter-btn" onclick="filterMenu('Sides')">Sides</button>
+            </div>
+            
+            <div id="menu-grid" class="menu-grid">
+                <div class="text-center w-100 text-muted">Loading Menu...</div>
+            </div>
+        </section>
+
+        <section id="reserve" class="section dark-bg">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <h2 class="brand-font display-5 mb-4">Book a Table</h2>
+                        <p class="text-muted mb-5">Join us for an unforgettable evening. Reserve your spot today.</p>
+                        
+                        <form id="reservationForm" class="text-start">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <input type="text" id="resName" class="form-control" placeholder="Your Name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="number" id="resPeople" class="form-control" placeholder="Number of Guests" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="date" id="resDate" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="time" id="resTime" class="form-control" required>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-gold w-100 py-3 fw-bold">Confirm Booking</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer class="text-center py-4 border-top border-secondary">
+            <small class="text-muted">&copy; 2024 <span class="logo-text">Velvet</span>. All rights reserved.</small>
+        </footer>
+    </main>
+
+    <div class="fab-cart" data-bs-toggle="offcanvas" data-bs-target="#cartSidebar">
+        <i class="bi bi-bag"></i>
+        <span class="cart-badge" id="cartCount">0</span>
+    </div>
+
+    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="cartSidebar">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Your Order</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+            <div id="cartItems" class="flex-grow-1 overflow-auto">
+                </div>
+            <div class="border-top border-secondary pt-3 mt-3">
+                <div class="d-flex justify-content-between fs-5 mb-3">
+                    <span>Total:</span>
+                    <span id="cartTotal" class="text-gold">₪0</span>
+                </div>
+                <button class="btn btn-gold w-100" onclick="openCheckoutModal()">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="checkoutModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white border-secondary">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title">Complete Order</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="checkoutForm">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" id="custName" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" id="custPhone" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Delivery Address / Notes</label>
+                            <textarea id="custAddress" class="form-control" rows="2" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Send Order to WhatsApp</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
