@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser');
 const { Storage } = require('@google-cloud/storage');
 
 // Import Database Models
-const Product = require('./models/Product');
+const Product = require('./models/product');
 const Setting = require('./models/Setting');
 const Order = require('./models/Order');
 const Reservation = require('./models/reservation');
@@ -253,5 +253,6 @@ app.get('/api/stats', requireAuth, async (req, res) => {
 app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.html')));
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'public', 'admin-login.html')));
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+
 
 app.listen(PORT, () => console.log(`🚀 Server fully operational on port ${PORT}`));
